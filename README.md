@@ -4,6 +4,12 @@ NexoClx Ped es una app independiente de la familia NexoClx orientada a pediatrí
 
 La familia NexoClx está formada por AP, Urg, 061 y Ped. Ped no es una copia pediatrizada de las apps adultas y no debe mezclarse con ellas.
 
+## Modelo de conducta
+
+Cada tema debe responder: "estoy ante esta patología en este paciente pediátrico, ¿qué hago ahora?". La secuencia de trabajo es patología -> edad/peso/grupo etario -> gravedad -> pruebas -> tratamiento pediátrico -> dosis mg/kg si procede -> escalada -> revisión -> derivación/urgencias/ingreso/traslado -> fuentes documentadas internamente.
+
+La interfaz debe priorizar conducta pediátrica. No debe mostrar capítulos, pasos de lectura ni bibliografía como parte del flujo clínico.
+
 ## Identidad
 
 - Contexto: Pediatría clínica práctica.
@@ -51,7 +57,7 @@ Cada tema debe:
 - mostrar dosis mg/kg, dosis máxima, vía, intervalo y restricción por edad si la fuente lo especifica;
 - indicar cuándo revisar, derivar, enviar a Urgencias, activar o trasladar;
 - permitir copiar un resumen útil;
-- listar fuentes al final.
+- documentar fuentes en reportes o README, no como bloque visible de la herramienta.
 
 Si una recomendación, dosis, algoritmo, escala, percentil o cálculo no tiene fuente trazable, no se muestra como herramienta activa.
 
@@ -78,13 +84,15 @@ No mencionar cálculos si no se calculan realmente. En Pediatría, si el tema re
 
 Si no se puede calcular de forma segura, documentarlo en `report.json` como omitido.
 
-## Fuentes
+## Fuentes internas
 
 Fuentes aceptables: guías clínicas, organismos oficiales, consensos publicados, sociedades científicas pediátricas y documentos sanitarios oficiales referenciados.
 
 Fuentes preferentes pediátricas: AEP, AEPap, SEUP, NICE pediátrico, AAP, WHO/OMS, CDC/ECDC, GINA, AHA/ERC pediátrico, guías pediátricas oficiales autonómicas o nacionales y consensos pediátricos publicados.
 
 No usar blogs, webs comerciales, apuntes, contenido generado por IA, presentaciones sin respaldo, protocolos locales no publicados ni textos sin trazabilidad.
+
+Las fuentes sostienen la herramienta por detrás. No añadir "Fuentes" o "Bibliografía" como card, paso o bloque visible dentro de cada herramienta clínica.
 
 ## Ejemplos de temas pediátricos
 
@@ -101,6 +109,7 @@ No rediseñar. Mantener patrón visual family-discovery-aesthetic, tipografía, 
 - No mostrar textos internos, pendientes, mocks ni placeholders.
 - No mostrar contenido clínico sin fuente.
 - No mencionar cálculos si no se calculan.
+- No mostrar bibliografía como ítem del flujo de la herramienta.
 - No tocar Vercel.
 
 ## Validación antes de commit/push

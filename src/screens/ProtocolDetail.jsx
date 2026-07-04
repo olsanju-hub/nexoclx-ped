@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import { DetailHeader } from '../components/detail/DetailHeader.jsx';
 import { ContentBlock } from '../components/detail/ContentBlock.jsx';
-import { SourceList } from '../components/detail/SourceList.jsx';
 import { PediatricAgeInput } from '../components/inputs/PediatricAgeInput.jsx';
 
 const getDefaultValues = (fields = []) => fields.reduce((values, field) => ({
@@ -246,35 +245,6 @@ export function ProtocolDetail({ protocol, onBack }) {
       <DetailHeader title={protocol.title} subtitle={protocol.description} onBack={onBack} />
       {protocol.assessment ? <ClinicalToolPanel protocol={protocol} /> : protocol.interactive && <DecisionPanel protocol={protocol} />}
 
-      {protocol.sections?.length > 0 && (
-        <section className="protocol-flow" aria-label="Estructura del protocolo">
-          {protocol.sections.map((section) => (
-            <article className="protocol-step-card" key={section.step}>
-              <span className="protocol-step-index">{section.step}</span>
-              <div className="protocol-step-copy">
-                <h2>{section.title}</h2>
-                <p>{section.body}</p>
-                {section.items?.length > 0 && (
-                  <ul className="clinical-bullets">
-                    {section.items.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </article>
-          ))}
-        </section>
-      )}
-
-      <ContentBlock title="Herramientas relacionadas">
-        <ul className="clinical-bullets">
-          {protocol.tools.map((tool) => (
-            <li key={tool}>{tool}</li>
-          ))}
-        </ul>
-      </ContentBlock>
-
       {protocol.treatment?.length > 0 && (
         <ContentBlock title="Tratamiento">
           <div className="treatment-grid">
@@ -294,8 +264,6 @@ export function ProtocolDetail({ protocol, onBack }) {
           </div>
         </ContentBlock>
       )}
-
-      <SourceList sources={protocol.sources} />
     </div>
   );
 }
