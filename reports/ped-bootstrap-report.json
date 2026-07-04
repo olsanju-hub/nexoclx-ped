@@ -11,9 +11,9 @@
     "capturas_generadas": false
   },
   "identidad": {
-    "color_principal": "#F2B705",
-    "color_suave": "#FFF4CC",
-    "color_muted": "#D99A00",
+    "color_principal": "#A88020",
+    "color_suave": "#F5E9C8",
+    "color_muted": "#8F6C17",
     "contexto": "Pediatria clinica practica",
     "iconos_creados_para_ped": true
   },

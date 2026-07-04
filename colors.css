@@ -1,15 +1,15 @@
 :root {
   --app-name: "NexoClx Ped";
   --clinical-context: "Pediatría clínica práctica";
-  --ped-accent: #f2b705;
-  --ped-accent-soft: #fff4cc;
-  --ped-accent-muted: #d99a00;
+  --ped-accent: #a88020;
+  --ped-accent-soft: #f5e9c8;
+  --ped-accent-muted: #8f6c17;
   --ped-bg: #fafaf7;
   --ped-surface: #ffffff;
   --ped-text: #1f2933;
   --ped-text-muted: #64748b;
   --ped-danger: #c62828;
-  --ped-warning: #f2b705;
+  --ped-warning: #a88020;
   --ped-success: #2e7d32;
   --ped-info: #2563eb;
   --ped-border: #e5e7eb;

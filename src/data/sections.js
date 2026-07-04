@@ -17,7 +17,7 @@ export const appConfig = {
   name: 'NexoClx Ped',
   context: 'Pediatría clínica práctica',
   icon: `${import.meta.env.BASE_URL}icons/icon-192.png`,
-  accent: '#F2B705',
+  accent: '#A88020',
   homeVariant: 'standard',
 };
 

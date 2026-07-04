@@ -2,19 +2,19 @@
   --app-name: "NexoClx Ped";
   --clinical-context: "Pediatría clínica práctica";
   --color-bg: #fafaf7;
-  --color-bg-soft: #fff8dc;
+  --color-bg-soft: #fbf6e9;
   --color-surface: #ffffff;
   --color-surface-subtle: #fffdf5;
   --color-text: #1f2933;
   --color-text-soft: #334155;
   --color-muted: #64748b;
   --color-line: #e5e7eb;
-  --color-line-strong: #eadca8;
-  --color-accent: #f2b705;
-  --color-accent-strong: #d99a00;
-  --color-accent-soft: #fff4cc;
-  --color-warning: #9a6700;
-  --color-warning-bg: #fff4cc;
+  --color-line-strong: #e4d2a2;
+  --color-accent: #a88020;
+  --color-accent-strong: #8f6c17;
+  --color-accent-soft: #f5e9c8;
+  --color-warning: #7a5a12;
+  --color-warning-bg: #f5e9c8;
   --color-danger: #c62828;
   --color-danger-bg: #fff0ef;
 }
