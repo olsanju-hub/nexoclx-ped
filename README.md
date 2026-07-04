@@ -30,7 +30,7 @@ No añadir temas por simetría con AP, Urg o 061. No añadir capítulos pediátr
 
 Cada tema debe:
 
-- pedir edad y peso cuando condicionen dosis o interpretación;
+- pedir edad con el componente comun `PediatricAgeInput`, separada en años y meses cuando condicione dosis, constantes o interpretación;
 - pedir constantes, síntomas, signos de gravedad y contexto;
 - devolver una conducta práctica;
 - calcular dosis si procede y si hay fórmula validada;

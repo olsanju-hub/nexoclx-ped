@@ -3,18 +3,22 @@ import { ContentBlock } from '../components/detail/ContentBlock.jsx';
 
 export function Calculations() {
   const [weight, setWeight] = useState('');
+  const [totalDose, setTotalDose] = useState('');
   const message = useMemo(() => {
-    if (!weight) return 'Introduce peso para validar el flujo de entrada.';
-    return 'Peso registrado. No hay cálculo de dosis activo hasta añadir una fórmula validada.';
-  }, [weight]);
+    const weightNumber = Number(weight);
+    const doseNumber = Number(totalDose);
+    if (!weight || !totalDose) return 'Introduce peso y dosis total para calcular mg/kg.';
+    if (Number.isNaN(weightNumber) || Number.isNaN(doseNumber) || weightNumber <= 0) return 'Datos no válidos para calcular.';
+    return `${(doseNumber / weightNumber).toFixed(2)} mg/kg`;
+  }, [totalDose, weight]);
 
   return (
     <div className="screen">
       <div className="section-heading">
         <h1>Cálculos</h1>
-        <p>Base para futuras dosis por peso.</p>
+        <p>Verificación matemática por peso, sin recomendar dosis.</p>
       </div>
-      <ContentBlock title="Peso">
+      <ContentBlock title="Verificador mg/kg">
         <label className="tool-field">
           <span>Peso</span>
           <span className="tool-input-wrap">
@@ -29,9 +33,27 @@ export function Calculations() {
             <small>kg</small>
           </span>
         </label>
+        <label className="tool-field">
+          <span>Dosis total prescrita o indicada</span>
+          <span className="tool-input-wrap">
+            <input
+              inputMode="decimal"
+              min="0"
+              type="number"
+              value={totalDose}
+              onChange={(event) => setTotalDose(event.target.value)}
+            />
+            <small>mg</small>
+          </span>
+        </label>
         <div className="decision-result">
-          <h3>{weight ? 'Dato listo' : 'Dato requerido'}</h3>
+          <h3>{weight && totalDose ? 'Resultado' : 'Datos requeridos'}</h3>
           <p>{message}</p>
+          <ul className="clinical-bullets">
+            <li>No sustituye una pauta farmacológica.</li>
+            <li>No aporta dosis máximas, frecuencia ni indicación.</li>
+            <li>Contrasta siempre con una fuente pediátrica específica del fármaco.</li>
+          </ul>
         </div>
       </ContentBlock>
     </div>

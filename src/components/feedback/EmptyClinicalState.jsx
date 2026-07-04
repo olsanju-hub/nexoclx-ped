@@ -1,6 +1,6 @@
 import { ShieldCheck } from 'lucide-react';
 
-export function EmptyClinicalState({ title = 'Contenido no operativo', text }) {
+export function EmptyClinicalState({ title = 'Sin contenido publicado', text }) {
   return (
     <div className="empty-state">
       <span className="empty-state-icon" aria-hidden="true">

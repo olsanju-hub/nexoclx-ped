@@ -4,7 +4,7 @@ import { EmptyClinicalState } from '../components/feedback/EmptyClinicalState.js
 export function CircuitDetail({ onBack }) {
   return (
     <div className="screen">
-      <DetailHeader title="Circuito pediátrico" subtitle="Estructura no operativa" onBack={onBack} />
+      <DetailHeader title="Circuito pediátrico" subtitle="Sin circuito clínico publicado" onBack={onBack} />
       <EmptyClinicalState
         title="Circuito no publicado"
         text="No hay contenido operativo hasta validar fuentes y criterios."

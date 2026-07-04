@@ -2,15 +2,32 @@ import { useMemo, useState } from 'react';
 import { DetailHeader } from '../components/detail/DetailHeader.jsx';
 import { ContentBlock } from '../components/detail/ContentBlock.jsx';
 import { SourceList } from '../components/detail/SourceList.jsx';
+import { PediatricAgeInput } from '../components/inputs/PediatricAgeInput.jsx';
 
 const getDefaultValues = (fields = []) => fields.reduce((values, field) => ({
   ...values,
-  [field.id]: field.type === 'checkbox' ? false : '',
+  ...(field.type === 'pediatricAge' ? { ageYears: '', ageExtraMonths: '' } : { [field.id]: field.type === 'checkbox' ? false : '' }),
 }), {});
+
+const getComputedValues = (values) => {
+  const years = Number(values.ageYears);
+  const months = Number(values.ageExtraMonths || 0);
+  if (values.ageYears === '' || Number.isNaN(years) || Number.isNaN(months)) return values;
+  return {
+    ...values,
+    ageMonths: (years * 12) + months,
+  };
+};
 
 const conditionIsMet = (condition, values) => {
   if (typeof condition === 'string') {
     return Boolean(values[condition]);
+  }
+  if (condition.any?.length > 0) {
+    return condition.any.some((item) => conditionIsMet(item, values));
+  }
+  if (condition.all?.length > 0) {
+    return condition.all.every((item) => conditionIsMet(item, values));
   }
   if (condition.gte !== undefined) {
     const value = Number(values[condition.id]);
@@ -32,12 +49,26 @@ const outcomeMatches = (outcome, values) => {
   return false;
 };
 
-const getMissingFields = (fields, values) => fields.filter((field) => field.required && values[field.id] === '');
+const getMissingFields = (fields, values, groups = []) => {
+  const missingFields = fields.filter((field) => {
+    if (!field.required) return false;
+    if (field.type === 'pediatricAge') return values.ageYears === '' || values.ageExtraMonths === '';
+    return values[field.id] === '';
+  });
+  const missingGroups = groups
+    .filter((group) => group.fields.every((fieldId) => values[fieldId] === ''))
+    .map((group) => ({ id: group.id, label: group.label }));
+  return [...missingFields, ...missingGroups];
+};
 
 function ClinicalToolPanel({ protocol }) {
   const [values, setValues] = useState(() => getDefaultValues(protocol.assessment.fields));
   const [copied, setCopied] = useState(false);
-  const missingFields = useMemo(() => getMissingFields(protocol.assessment.fields, values), [protocol.assessment.fields, values]);
+  const computedValues = useMemo(() => getComputedValues(values), [values]);
+  const missingFields = useMemo(
+    () => getMissingFields(protocol.assessment.fields, values, protocol.assessment.requiredGroups),
+    [protocol.assessment.fields, protocol.assessment.requiredGroups, values],
+  );
   const outcome = useMemo(
     () => {
       if (missingFields.length > 0) {
@@ -48,18 +79,36 @@ function ClinicalToolPanel({ protocol }) {
           actions: missingFields.map((field) => `Completar: ${field.label}`),
         };
       }
-      return protocol.assessment.outcomes.find((item) => outcomeMatches(item, values)) ?? protocol.assessment.defaultOutcome;
+      return protocol.assessment.outcomes.find((item) => outcomeMatches(item, computedValues)) ?? protocol.assessment.defaultOutcome;
     },
-    [missingFields, protocol.assessment, values],
+    [computedValues, missingFields, protocol.assessment],
   );
+  const formatValue = (field, value) => {
+    if (field.id === 'ageYears') {
+      const years = value === '' ? 0 : Number(value);
+      const months = values.ageExtraMonths === '' ? 0 : Number(values.ageExtraMonths);
+      return `${years} años ${months} meses`;
+    }
+    if (field.type === 'pediatricAge') {
+      const years = values.ageYears === '' ? 0 : Number(values.ageYears);
+      const months = values.ageExtraMonths === '' ? 0 : Number(values.ageExtraMonths);
+      return `${years} años ${months} meses`;
+    }
+    const option = field.options?.find((item) => item.value === value);
+    return `${option?.label ?? value}${field.unit ? ` ${field.unit}` : ''}`;
+  };
   const summary = useMemo(() => {
     const findings = protocol.assessment.fields
       .map((field) => {
+        if (field.type === 'pediatricAge') {
+          if (values.ageYears === '' || values.ageExtraMonths === '') return null;
+          return `- ${field.label}: ${formatValue(field)}`;
+        }
         const value = values[field.id];
+        if (field.id === 'ageExtraMonths') return null;
         if (field.type === 'checkbox') return value ? `- ${field.label}` : null;
         if (value === '') return null;
-        const option = field.options?.find((item) => item.value === value);
-        return `- ${field.label}: ${option?.label ?? value}${field.unit ? ` ${field.unit}` : ''}`;
+        return `- ${field.label}: ${formatValue(field, value)}`;
       })
       .filter(Boolean)
       .join('\n') || '- Sin datos introducidos.';
@@ -101,6 +150,18 @@ function ClinicalToolPanel({ protocol }) {
                 />
                 {field.unit && <small>{field.unit}</small>}
               </span>
+            )}
+            {field.type === 'pediatricAge' && (
+              <PediatricAgeInput
+                years={values.ageYears}
+                months={values.ageExtraMonths}
+                minYears={field.minYears}
+                maxYears={field.maxYears}
+                onChange={(id, value) => {
+                  setValues((current) => ({ ...current, [id]: value }));
+                  setCopied(false);
+                }}
+              />
             )}
             {field.type === 'select' && (
               <select value={values[field.id]} onChange={(event) => updateValue(field, event.target.value)}>
