@@ -1,0 +1,86 @@
+{
+  "fecha": "2026-07-04",
+  "app": "NexoClx Ped",
+  "repo": "olsanju-hub/nexoclx-ped",
+  "objetivo": "Crear estructura base funcional y visual de app pediatrica independiente.",
+  "estado": {
+    "app_independiente": true,
+    "selector_comun_nexoclx": false,
+    "apps_existentes_modificadas": false,
+    "vercel_tocado": false,
+    "capturas_generadas": false
+  },
+  "identidad": {
+    "color_principal": "#F2B705",
+    "color_suave": "#FFF4CC",
+    "color_muted": "#D99A00",
+    "contexto": "Pediatria clinica practica",
+    "iconos_creados_para_ped": true
+  },
+  "revision_herramientas_existentes": {
+    "apps_revisadas": ["NexoClx AP", "NexoClx Urg", "NexoClx 061"],
+    "patrones_reutilizados": [
+      "panel assessment con campos estructurados",
+      "resultado dinamico por criterios",
+      "resumen copiable",
+      "fuentes al final",
+      "cards compactas y navegacion de familia"
+    ],
+    "temas_revisados": ["Dolor toracico", "HTA"]
+  },
+  "modulos_iniciales_ped": [
+    {
+      "id": "dolor-toracico",
+      "titulo": "Dolor toracico",
+      "estado": "estructura interactiva no operativa",
+      "motivo": "La etiologia, criterios de gravedad y conducta pediatrica no deben extrapolarse desde herramientas de adultos.",
+      "salida_visible": "Interpretacion pendiente de validacion clinica pediatrica."
+    },
+    {
+      "id": "hta-pediatrica",
+      "titulo": "HTA pediatrica",
+      "estado": "estructura interactiva no operativa",
+      "motivo": "La interpretacion requiere tablas/percentiles pediatricos por edad, sexo y talla no cargados en esta version.",
+      "salida_visible": "Interpretacion pendiente de validacion clinica pediatrica."
+    }
+  ],
+  "fuentes_usadas_para_decision": [
+    {
+      "fuente": "American Academy of Pediatrics. Clinical Practice Guideline for Screening and Management of High Blood Pressure in Children and Adolescents. Pediatrics. 2017;140(3):e20171904.",
+      "url": "https://publications.aap.org/pediatrics/article/140/3/e20171904/38358/Clinical-Practice-Guideline-for-Screening-and",
+      "uso": "Confirma que la interpretacion de HTA pediatrica depende de tablas/percentiles pediatricos especificos."
+    },
+    {
+      "fuente": "Royal Children's Hospital Melbourne. Clinical Practice Guideline: Chest pain.",
+      "url": "https://www.rch.org.au/clinicalguide/guideline_index/chest_pain/",
+      "uso": "Confirma que dolor toracico pediatrico requiere enfoque pediatrico y descarte de causas graves, sin extrapolar directamente del adulto."
+    },
+    {
+      "fuente": "Children's Hospital of Philadelphia. Chest Pain Clinical Pathway - Emergency Department.",
+      "url": "https://www.chop.edu/clinical-pathway/chest-pain-clinical-pathway",
+      "uso": "Referencia estructural para futura ruta pediatrica de dolor toracico con criterios pediatricos."
+    }
+  ],
+  "contenido_no_implementado_por_seguridad": [
+    "percentiles pediatricos de tension arterial",
+    "clasificacion activa de HTA pediatrica",
+    "conducta de derivacion por HTA pediatrica",
+    "tratamiento antihipertensivo pediatrico",
+    "dosis pediatricas por kg",
+    "algoritmos activos de dolor toracico pediatrico",
+    "umbrales de constantes por edad",
+    "criterios activos de gravedad o derivacion en dolor toracico pediatrico"
+  ],
+  "validacion": {
+    "build": "pass",
+    "errores_consola": [],
+    "overflow_horizontal": false,
+    "home_bottom_nav": false,
+    "desktop_bottom_nav": false,
+    "colores_base_ped": "definidos",
+    "navegacion_global_modificada_en_apps_existentes": false,
+    "contenido_clinico_inventado": false,
+    "formulas_modificadas": false,
+    "calculadoras_nuevas_activas": false
+  }
+}

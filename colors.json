@@ -1,0 +1,18 @@
+{
+  "name": "NexoClx Ped",
+  "context": "Pediatría clínica práctica",
+  "colors": {
+    "accent": "#F2B705",
+    "accentSoft": "#FFF4CC",
+    "accentMuted": "#D99A00",
+    "bg": "#FAFAF7",
+    "surface": "#FFFFFF",
+    "text": "#1F2933",
+    "muted": "#64748B",
+    "danger": "#C62828",
+    "warning": "#F2B705",
+    "success": "#2E7D32",
+    "info": "#2563EB",
+    "border": "#E5E7EB"
+  }
+}
