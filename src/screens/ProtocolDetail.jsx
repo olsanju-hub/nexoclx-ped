@@ -31,16 +31,16 @@ const conditionIsMet = (condition, values) => {
   }
   if (condition.gte !== undefined) {
     const value = Number(values[condition.id]);
-    return values[condition.id] !== '' && !Number.isNaN(value) && value >= condition.gte;
+    if (values[condition.id] === '' || Number.isNaN(value) || value < condition.gte) return false;
   }
   if (condition.lte !== undefined) {
     const value = Number(values[condition.id]);
-    return values[condition.id] !== '' && !Number.isNaN(value) && value <= condition.lte;
+    if (values[condition.id] === '' || Number.isNaN(value) || value > condition.lte) return false;
   }
   if (condition.equals !== undefined) {
     return values[condition.id] === condition.equals;
   }
-  return false;
+  return condition.gte !== undefined || condition.lte !== undefined;
 };
 
 const outcomeMatches = (outcome, values) => {
@@ -246,24 +246,26 @@ export function ProtocolDetail({ protocol, onBack }) {
       <DetailHeader title={protocol.title} subtitle={protocol.description} onBack={onBack} />
       {protocol.assessment ? <ClinicalToolPanel protocol={protocol} /> : protocol.interactive && <DecisionPanel protocol={protocol} />}
 
-      <section className="protocol-flow" aria-label="Estructura del protocolo">
-        {protocol.sections.map((section) => (
-          <article className="protocol-step-card" key={section.step}>
-            <span className="protocol-step-index">{section.step}</span>
-            <div className="protocol-step-copy">
-              <h2>{section.title}</h2>
-              <p>{section.body}</p>
-              {section.items?.length > 0 && (
-                <ul className="clinical-bullets">
-                  {section.items.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </article>
-        ))}
-      </section>
+      {protocol.sections?.length > 0 && (
+        <section className="protocol-flow" aria-label="Estructura del protocolo">
+          {protocol.sections.map((section) => (
+            <article className="protocol-step-card" key={section.step}>
+              <span className="protocol-step-index">{section.step}</span>
+              <div className="protocol-step-copy">
+                <h2>{section.title}</h2>
+                <p>{section.body}</p>
+                {section.items?.length > 0 && (
+                  <ul className="clinical-bullets">
+                    {section.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </article>
+          ))}
+        </section>
+      )}
 
       <ContentBlock title="Herramientas relacionadas">
         <ul className="clinical-bullets">

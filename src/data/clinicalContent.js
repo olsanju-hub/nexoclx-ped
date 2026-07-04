@@ -232,27 +232,27 @@ export const clinicalProtocols = [
   {
     id: 'hta-pediatrica',
     title: 'HTA pediátrica',
-    description: 'Estructura para TA pediátrica con percentiles pendientes de validación.',
-    status: 'Validación pendiente',
+    description: 'Clasificación inicial por edad, técnica y cifras de presión arterial.',
+    status: 'Herramienta activa',
     sections: [
       {
         step: '01',
-        title: 'Datos mínimos antes de interpretar',
-        body: 'La presión arterial pediátrica no puede interpretarse sin edad, sexo, talla o percentil de talla, cifras de PAS/PAD y técnica de medición fiable.',
+        title: 'Cómo leer la salida',
+        body: 'El resultado principal está en el panel superior y cambia al introducir los datos. Estos criterios solo explican cómo se decide.',
         items: [
-          'En menores de 13 años no se usan umbrales adultos.',
-          'La clasificación de 1 a 12 años requiere tablas pediátricas por edad, sexo y talla.',
-          'Si la técnica o el manguito no son adecuados, debe repetirse o confirmarse la medición antes de clasificar.',
+          'Primero se valida técnica, manguito y número de mediciones.',
+          'Después se priorizan síntomas de alarma o posible daño de órgano diana.',
+          'Finalmente se clasifica solo si hay edad y fuente aplicable.',
         ],
       },
       {
         step: '02',
-        title: 'Interpretación bloqueada',
-        body: 'La app recoge los datos necesarios, pero no clasifica ni propone conducta hasta cargar una tabla pediátrica validada.',
+        title: 'Límite de la herramienta',
+        body: 'La clasificación por percentiles de 1 a 12 años sigue bloqueada porque requiere tabla pediátrica validada cargada.',
         items: [
-          'No hay percentiles activos.',
-          'No hay criterios activos de crisis hipertensiva.',
-          'No hay tratamiento ni dosis antihipertensivas pediátricas activas.',
+          'Menores de 13 años: no usar umbrales adultos.',
+          'Adolescentes de 13 años o más: se aplican puntos de corte AAP 2017.',
+          'Si hay síntomas de alarma, la salida prioriza valoración urgente.',
         ],
       },
     ],
@@ -312,6 +312,19 @@ export const clinicalProtocols = [
       ],
       outcomes: [
         {
+          any: ['organDamageSymptoms'],
+          status: 'Urgente',
+          tone: 'alert',
+          title: 'Valoración urgente por síntomas de alarma o posible daño de órgano diana',
+          body: 'Hay síntomas de alarma o posible daño de órgano diana. La prioridad es valoración urgente; la tabla de percentiles no debe retrasar la actuación clínica.',
+          actions: [
+            'Completar constantes y exploración dirigida.',
+            'No esperar a tabla de percentiles para valorar gravedad.',
+            'No proponer tratamiento ni dosis sin fuente pediátrica implementada.',
+            'Usar criterios SEUP/AEP cuando se incorporen al algoritmo activo.',
+          ],
+        },
+        {
           any: [
             { id: 'measurementMethod', equals: 'not-validated' },
             { id: 'measurementMethod', equals: 'unknown' },
@@ -328,18 +341,6 @@ export const clinicalProtocols = [
             'Usar manguito adecuado al brazo.',
             'Repetir mediciones antes de intentar clasificar.',
             'No aplicar umbrales adultos en menores de 13 años.',
-          ],
-        },
-        {
-          any: ['organDamageSymptoms'],
-          status: 'Validar',
-          tone: 'alert',
-          title: 'Interpretación pendiente de tabla validada.',
-          body: 'Hay síntomas de alarma o posible daño de órgano diana, pero la app no tiene criterios pediátricos de crisis hipertensiva activos.',
-          actions: [
-            'No clasificar crisis hipertensiva sin criterios pediátricos validados.',
-            'No proponer tratamiento ni dosis sin fuente pediátrica implementada.',
-            'Cargar criterios SEUP/AEP antes de activar conducta.',
           ],
         },
         {
