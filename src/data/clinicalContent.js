@@ -35,7 +35,7 @@ export const clinicalProtocols = [
         body: 'La prioridad es identificar mal estado, compromiso respiratorio, síncope/esfuerzo, antecedentes cardiacos o exploración anormal antes de orientar etiología.',
         items: [
           'No se usa como dolor torácico adulto ni como protocolo de SCA.',
-          'ECG, radiografía, troponina u otras pruebas se reservan para contexto, factores de riesgo o hallazgos relevantes.',
+          'ECG, radiografía y troponina se reservan para red flags o hallazgos que justifiquen cada prueba.',
           'Si hay alarma, la salida prioriza valoración urgente y completar constantes.',
         ],
       },
@@ -145,7 +145,8 @@ export const clinicalProtocols = [
           actions: [
             'Completar constantes y exploración cardiopulmonar.',
             'Valorar ECG según contexto y hallazgos.',
-            'Valorar radiografía, troponina u otras pruebas solo si el contexto o los hallazgos lo justifican.',
+            'Valorar Rx tórax solo con clínica respiratoria, traumatismo o sospecha pulmonar.',
+            'Valorar troponina solo con sospecha de miocarditis/pericarditis, isquemia excepcional o ECG anormal.',
             'No usar HEART, GRACE, TIMI ni lógica de SCA adulto.',
           ],
         },
@@ -178,7 +179,7 @@ export const clinicalProtocols = [
           body: 'Los datos orientan a evaluación respiratoria dirigida, especialmente si hay disnea, fiebre, tos o dolor pleurítico.',
           actions: [
             'Revisar trabajo respiratorio, auscultación y saturación.',
-            'Valorar radiografía u otras pruebas solo con hallazgos relevantes.',
+            'Valorar Rx tórax solo si la clínica respiratoria o la exploración lo justifican.',
             'Reevaluar si aparece mal estado, hipoxemia o exploración anormal.',
           ],
         },
@@ -220,7 +221,7 @@ export const clinicalProtocols = [
         title: 'Sin red flags registradas',
         body: 'Con constantes, aspecto y exploración tranquilizadores, el dolor torácico pediátrico suele ser benigno o autolimitado. Mantener evaluación clínica dirigida.',
         actions: [
-          'No realizar ECG, radiografía ni troponina de forma universal.',
+          'No realizar ECG, Rx tórax ni troponina de forma universal.',
           'Orientar según patrón musculoesquelético, respiratorio, digestivo o funcional.',
           'Reevaluar si aparece esfuerzo, síncope, disnea, fiebre con afectación, palpitaciones sintomáticas o exploración anormal.',
         ],

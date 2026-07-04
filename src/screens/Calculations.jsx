@@ -7,7 +7,7 @@ export function Calculations() {
   const message = useMemo(() => {
     const weightNumber = Number(weight);
     const doseNumber = Number(totalDose);
-    if (!weight || !totalDose) return 'Introduce peso y dosis total para calcular mg/kg.';
+    if (!weight || !totalDose) return 'Calcula mg/kg a partir de dosis total y peso. No recomienda pauta.';
     if (Number.isNaN(weightNumber) || Number.isNaN(doseNumber) || weightNumber <= 0) return 'Datos no válidos para calcular.';
     return `${(doseNumber / weightNumber).toFixed(2)} mg/kg`;
   }, [totalDose, weight]);
@@ -18,7 +18,7 @@ export function Calculations() {
         <h1>Cálculos</h1>
         <p>Verificación matemática por peso, sin recomendar dosis.</p>
       </div>
-      <ContentBlock title="Verificador mg/kg">
+      <ContentBlock title="Calculadora mg/kg">
         <label className="tool-field">
           <span>Peso</span>
           <span className="tool-input-wrap">
