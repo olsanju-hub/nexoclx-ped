@@ -22,6 +22,14 @@ const pediatricHypertensionSources = [
   'NexoClx Ped: las tablas, percentiles, umbrales, dosis y conductas pediátricas deben cargarse y validarse antes de activar recomendaciones clínicas.',
 ];
 
+const pediatricStrokeSources = [
+  'AHA/ASA. 2026 Guideline for the Early Management of Patients With Acute Ischemic Stroke. https://www.ahajournals.org/doi/10.1161/STR.0000000000000513',
+  'Royal College of Paediatrics and Child Health. Stroke in childhood - clinical guideline for diagnosis, management and rehabilitation. https://www.rcpch.ac.uk/resources/stroke-in-childhood-clinical-guideline',
+  'Royal Children’s Hospital Melbourne. Clinical Practice Guideline: Stroke. https://www.rch.org.au/clinicalguide/guideline_index/stroke/',
+  'American Heart Association/American Stroke Association. Management of Stroke in Neonates and Children: A Scientific Statement. https://www.ahajournals.org/doi/10.1161/STR.0000000000000183',
+  'Children’s Hospital of Philadelphia. Emergency Department and PICU Clinical Pathway for Stroke, Suspected. https://www.chop.edu/clinical-pathway/stroke-suspected-clinical-pathway',
+];
+
 export const clinicalProtocols = [
   {
     id: 'dolor-toracico',
@@ -208,13 +216,9 @@ export const clinicalProtocols = [
       ],
       incompleteOutcome: {
         status: 'Datos',
-        title: 'Completa datos mínimos',
-        body: 'Edad, aspecto general/TEP, frecuencia cardiaca, frecuencia respiratoria, saturación y temperatura son necesarios para triar dolor torácico pediátrico.',
-        actions: [
-          'Introducir edad en años y meses.',
-          'Registrar aspecto general o TEP.',
-          'Introducir frecuencia cardiaca, frecuencia respiratoria, saturación y temperatura.',
-        ],
+        title: 'Faltan datos obligatorios',
+        body: 'Completa los campos marcados para orientar gravedad y pruebas dirigidas.',
+        actions: [],
       },
       defaultOutcome: {
         status: 'Bajo riesgo',
@@ -237,16 +241,6 @@ export const clinicalProtocols = [
     sections: [
       {
         step: '01',
-        title: 'Cómo leer la salida',
-        body: 'El resultado principal está en el panel superior y cambia al introducir los datos. Estos criterios solo explican cómo se decide.',
-        items: [
-          'Primero se valida técnica, manguito y número de mediciones.',
-          'Después se priorizan síntomas de alarma o posible daño de órgano diana.',
-          'Finalmente se clasifica solo si hay edad y fuente aplicable.',
-        ],
-      },
-      {
-        step: '02',
         title: 'Límite de la herramienta',
         body: 'La clasificación por percentiles de 1 a 12 años sigue bloqueada porque requiere tabla pediátrica validada cargada.',
         items: [
@@ -263,7 +257,7 @@ export const clinicalProtocols = [
     ],
     assessment: {
       title: 'HTA pediátrica',
-      intro: 'Introduce los datos mínimos. La herramienta no usa umbrales adultos ni clasifica sin tabla pediátrica cargada.',
+      intro: 'Interpreta TA pediátrica sin usar umbrales adultos.',
       copyPrefix: 'NexoClx Ped - HTA pediátrica',
       requiredGroups: [
         { id: 'height-or-percentile', label: 'Talla en cm o percentil de talla', fields: ['height', 'heightPercentile'] },
@@ -422,20 +416,14 @@ export const clinicalProtocols = [
       ],
       incompleteOutcome: {
         status: 'Datos',
-        title: 'Completa datos mínimos',
-        body: 'Edad, sexo, talla o percentil de talla, PAS, PAD, método, manguito y número de mediciones son necesarios antes de interpretar.',
-        actions: [
-          'Introducir edad en años y meses.',
-          'Seleccionar sexo para tablas.',
-          'Introducir TA sistólica y diastólica.',
-          'Añadir talla o percentil de talla.',
-          'Registrar método, manguito y número de mediciones.',
-        ],
+        title: 'Faltan datos obligatorios',
+        body: 'Completa los campos marcados para interpretar la presión arterial.',
+        actions: [],
       },
       defaultOutcome: {
         status: 'Validar',
         title: 'Interpretación pendiente de tabla validada.',
-        body: 'La herramienta recoge los datos mínimos, pero la clasificación pediátrica sigue bloqueada porque no hay tabla validada cargada.',
+        body: 'La clasificación pediátrica sigue bloqueada porque no hay tabla validada cargada.',
         actions: [
           'No clasificar HTA sin percentiles validados.',
           'No proponer tratamiento, derivación ni criterios de crisis sin fuente pediátrica implementada.',
@@ -444,5 +432,136 @@ export const clinicalProtocols = [
       },
     },
     sources: pediatricHypertensionSources,
+  },
+  {
+    id: 'acv-pediatrico',
+    title: 'ACV pediátrico',
+    description: 'Sospecha de ictus infantil, gravedad, neuroimagen y derivación urgente.',
+    status: 'Herramienta de triaje',
+    sections: [
+      {
+        step: '01',
+        title: 'Sospecha pediátrica',
+        body: 'El ictus infantil puede presentarse con déficit focal, convulsión, cefalea, alteración del nivel de conciencia o síntomas fluctuantes.',
+        items: [
+          'No usar criterios adultos sin adaptación pediátrica.',
+          'La neuroimagen urgente y neurología pediátrica son claves para confirmar diagnóstico y guiar manejo.',
+          'Los imitadores son frecuentes, pero no deben retrasar la valoración si persiste déficit focal o hay factores de riesgo.',
+        ],
+      },
+      {
+        step: '02',
+        title: 'Vía urgente',
+        body: 'Si hay sospecha, priorizar estabilización, glucemia, neuroimagen y contacto con equipo pediátrico especializado.',
+        items: [
+          'Reperfusión en Pediatría depende de edad, tiempo, imagen, déficit y equipo experto.',
+          'No mostrar dosis de trombólisis ni anticoagulación si no están integradas en un circuito pediátrico validado.',
+          'Registrar hora de inicio o última vez visto bien, edad, antecedentes y evolución.',
+        ],
+      },
+    ],
+    tools: [
+      'Edad en años y meses.',
+      'Selector de déficit focal, convulsión, cefalea y factores de riesgo.',
+      'Resumen copiable para derivación pediátrica urgente.',
+    ],
+    assessment: {
+      title: 'Herramienta ACV pediátrico',
+      intro: 'Orienta sospecha de ictus infantil y derivación urgente.',
+      copyPrefix: 'NexoClx Ped - ACV pediátrico',
+      fields: [
+        { id: 'age', type: 'pediatricAge', label: 'Edad', minYears: 0, maxYears: 18, required: true },
+        {
+          id: 'onset',
+          type: 'select',
+          label: 'Inicio o última vez visto bien',
+          required: true,
+          options: [
+            { value: 'under-4-5', label: 'Menos de 4,5 h' },
+            { value: 'under-24', label: '4,5-24 h' },
+            { value: 'over-24', label: 'Más de 24 h' },
+            { value: 'unknown', label: 'Desconocido' },
+            { value: 'resolved', label: 'Síntomas resueltos' },
+          ],
+        },
+        {
+          id: 'appearance',
+          type: 'select',
+          label: 'Aspecto general / TEP',
+          required: true,
+          options: [
+            { value: 'stable', label: 'Estable' },
+            { value: 'altered', label: 'Mal aspecto o TEP alterado' },
+            { value: 'unknown', label: 'No consta' },
+          ],
+        },
+        { id: 'focalWeakness', type: 'checkbox', label: 'Debilidad facial, brazo/pierna o asimetría focal' },
+        { id: 'speechVision', type: 'checkbox', label: 'Alteración de habla, lenguaje, visión, coordinación o marcha' },
+        { id: 'seizure', type: 'checkbox', label: 'Convulsión al inicio o crisis focal' },
+        { id: 'headacheVomiting', type: 'checkbox', label: 'Cefalea intensa, vómitos o meningismo' },
+        { id: 'alteredConsciousness', type: 'checkbox', label: 'Somnolencia, confusión o disminución de conciencia' },
+        { id: 'riskFactor', type: 'checkbox', label: 'Cardiopatía, drepanocitosis, infección reciente, varicela, trombofilia, traumatismo o arteriopatía conocida' },
+        { id: 'glucoseChecked', type: 'checkbox', label: 'Glucemia revisada si disponible' },
+      ],
+      outcomes: [
+        {
+          any: [
+            { id: 'appearance', equals: 'altered' },
+            'alteredConsciousness',
+            'headacheVomiting',
+          ],
+          status: 'Urgente',
+          tone: 'alert',
+          title: 'Valoración urgente pediátrica/neurocrítica',
+          body: 'Hay datos de gravedad neurológica o sistémica. Priorizar estabilización, neuroimagen urgente y equipo pediátrico especializado.',
+          actions: [
+            'Aplicar ABCDE pediátrico y revisar glucemia si está disponible.',
+            'Contactar neurología pediátrica/centro con experiencia en ictus infantil.',
+            'No iniciar trombólisis, antiagregación o anticoagulación fuera de circuito pediátrico experto.',
+          ],
+        },
+        {
+          any: ['focalWeakness', 'speechVision', 'seizure', 'riskFactor'],
+          status: 'Sospecha',
+          tone: 'alert',
+          title: 'Sospecha de ictus pediátrico: derivación urgente',
+          body: 'El déficit focal, crisis focal o factores de riesgo hacen necesaria valoración urgente con neuroimagen y neurología pediátrica.',
+          actions: [
+            'Registrar edad, hora de inicio o última vez visto bien, evolución y antecedentes.',
+            'Priorizar neuroimagen urgente según circuito pediátrico.',
+            'Activar traslado o derivación al centro útil pediátrico.',
+          ],
+        },
+        {
+          any: [{ id: 'onset', equals: 'resolved' }],
+          status: 'AIT',
+          tone: 'alert',
+          title: 'Síntomas resueltos compatibles: valoración urgente',
+          body: 'La resolución no descarta evento cerebrovascular pediátrico ni riesgo precoz.',
+          actions: [
+            'Derivar para valoración urgente pediátrica.',
+            'Documentar hora de inicio, duración, síntomas y factores de riesgo.',
+            'Evitar cerrar el episodio sin evaluación especializada si fue compatible.',
+          ],
+        },
+      ],
+      incompleteOutcome: {
+        status: 'Datos',
+        title: 'Faltan datos obligatorios',
+        body: 'Completa edad, inicio y aspecto general para orientar urgencia.',
+        actions: [],
+      },
+      defaultOutcome: {
+        status: 'Reevaluar',
+        title: 'Sin datos de ictus pediátrico registrados',
+        body: 'Si no hay déficit focal ni datos de gravedad, reevaluar diagnóstico diferencial y seguridad clínica.',
+        actions: [
+          'Revisar constantes, glucemia si procede y exploración neurológica.',
+          'Derivar si persiste duda, síntomas progresivos, factores de riesgo o mala evolución.',
+          'Dar instrucciones de consulta urgente si aparece déficit focal, convulsión, cefalea intensa o alteración de conciencia.',
+        ],
+      },
+    },
+    sources: pediatricStrokeSources,
   },
 ];

@@ -1,0 +1,44 @@
+{
+  "fecha": "2026-07-04",
+  "app": "NexoClx Ped",
+  "rama": "main",
+  "commit_inicial": "eeb3f0c",
+  "tema_creado": "ACV pediatrico",
+  "decision_pertinencia": "Aplica en Ped como sospecha de ictus infantil, deteccion de gravedad, neuroimagen urgente, neurologia pediatrica y derivacion a centro util pediatrico.",
+  "archivos_modificados": [
+    "src/data/clinicalContent.js",
+    "src/screens/ProtocolDetail.jsx"
+  ],
+  "archivos_creados": [
+    "reports/acv-tool-report.json"
+  ],
+  "fuentes_usadas": [
+    "AHA/ASA 2026 Guideline for the Early Management of Patients With Acute Ischemic Stroke",
+    "RCPCH Stroke in childhood clinical guideline",
+    "Royal Children's Hospital Melbourne Clinical Practice Guideline: Stroke",
+    "AHA/ASA Management of Stroke in Neonates and Children Scientific Statement",
+    "CHOP Stroke, Suspected Clinical Pathway"
+  ],
+  "fuente_por_bloque_clinico": {
+    "sospecha_pediatrica": ["RCPCH", "RCH", "AHA/ASA pediatric statement"],
+    "neuroimagen_y_neurologia_pediatrica": ["RCH", "CHOP", "RCPCH"],
+    "reperfusión_pediatrica_no_dosificada": ["AHA/ASA 2026", "RCH"]
+  },
+  "tratamiento_dosis_anadidas": [],
+  "calculos_implementados": [],
+  "calculos_omitidos": [],
+  "contenido_omitido_por_falta_de_fuente": [
+    "Dosis de trombolisis pediatrica y anticoagulacion no visibles: requieren circuito pediatrico experto y validacion local.",
+    "Criterios cerrados de reperfusion pediatrica no incluidos como algoritmo autonomo."
+  ],
+  "calculadoras_nuevas": false,
+  "formulas_modificadas": false,
+  "build": "pass",
+  "errores_consola": [],
+  "overflow_horizontal": false,
+  "colores_base_modificados": false,
+  "navegacion_global_modificada": false,
+  "estetica_modificada": false,
+  "vercel_tocado": false,
+  "notas": "Incluye tambien limpieza de copy redundante visible solicitada antes de ACV."
+}
