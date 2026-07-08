@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-07-04",
+  "fecha": "2026-07-09",
   "app": "NexoClx Ped",
   "README_actualizado": true,
   "herramientas_temas_revisados": ["Dolor toracico pediatrico", "HTA pediatrica", "ACV pediatrico", "Calculadora mg/kg"],
@@ -10,11 +10,14 @@
     "Calculadora mg/kg": "aplica como calculadora matematica auxiliar que no recomienda pauta"
   },
   "herramientas_corregidas": [
+    "Creado motor src/lib/clinicalToolEngine.js para fields, calculations, interpretations y outcomes",
+    "Creado componente ClinicalActionTool pediatrico con PediatricAgeInput",
     "Detalle de protocolo centrado en panel de conducta y resumen copiable",
     "Retirados pasos narrativos visibles del flujo de herramienta",
     "Retirado bloque visible de fuentes dentro del detalle de herramienta",
     "Retirado bloque visible de herramientas relacionadas dentro del detalle"
   ],
+  "herramientas_convertidas_a_assessment": ["Dolor toracico pediatrico", "HTA pediatrica", "ACV pediatrico"],
   "herramientas_no_modificadas_y_motivo": [
     "Calculadora mg/kg conserva su alcance: calcula mg/kg a partir de dosis total y peso, no recomienda pauta"
   ],
@@ -36,6 +39,8 @@
   "tratamientos_dosis_escaladas_anadidas": [],
   "archivos_modificados": [
     "README.md",
+    "src/lib/clinicalToolEngine.js",
+    "src/components/detail/ClinicalActionTool.jsx",
     "src/screens/ProtocolDetail.jsx",
     "src/data/clinicalContent.js",
     "reports/action-tool-model-report.json"

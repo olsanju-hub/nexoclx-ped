@@ -10,6 +10,8 @@ Cada tema debe responder: "estoy ante esta patología en este paciente pediátri
 
 La interfaz debe priorizar conducta pediátrica. No debe mostrar capítulos, pasos de lectura ni bibliografía como parte del flujo clínico.
 
+El patrón técnico base es `src/lib/clinicalToolEngine.js` + `ClinicalActionTool`: cada tema debe expresarse como `assessment.fields`, `assessment.calculations`, `assessment.interpretations` y `assessment.outcomes`.
+
 ## Identidad
 
 - Contexto: Pediatría clínica práctica.
