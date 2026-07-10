@@ -25,28 +25,28 @@ export const primarySections = [
   {
     id: routes.protocols,
     title: 'Protocolos',
-    description: 'Herramientas pediátricas validadas.',
+    description: 'Estructura preparada para futuros protocolos.',
     icon: FileText,
   },
   {
     id: routes.tools,
     title: 'Herramientas',
-    description: 'Datos mínimos, gravedad y peso.',
+    description: 'Estructura preparada para futuras herramientas.',
     icon: Calculator,
   },
   {
     id: routes.bibliography,
     title: 'Bibliografía',
-    description: 'Fuentes pediátricas trazables.',
+    description: 'Estructura preparada para futuras fuentes.',
     icon: BookOpen,
   },
 ];
 
 export const secondarySections = [
-  { id: routes.protocols, title: 'Protocolos', description: 'Herramientas pediátricas validadas.', icon: FolderOpen },
-  { id: routes.tools, title: 'Herramientas', description: 'Datos mínimos, gravedad y peso.', icon: Wrench },
-  { id: routes.calculations, title: 'Cálculos', description: 'Base para dosis por peso.', icon: Ruler },
-  { id: routes.bibliography, title: 'Bibliografía', description: 'Fuentes pediátricas trazables.', icon: Library },
+  { id: routes.protocols, title: 'Protocolos', description: 'Estructura preparada para futuros protocolos.', icon: FolderOpen },
+  { id: routes.tools, title: 'Herramientas', description: 'Estructura preparada para futuras herramientas.', icon: Wrench },
+  { id: routes.calculations, title: 'Cálculos', description: 'Estructura preparada para futuros cálculos.', icon: Ruler },
+  { id: routes.bibliography, title: 'Bibliografía', description: 'Estructura preparada para futuras fuentes.', icon: Library },
 ];
 
 export const bottomNavItems = [

@@ -5,12 +5,9 @@ export function Procedures() {
     <div className="screen">
       <div className="section-heading">
         <h1>Procedimientos</h1>
-        <p>Sección secundaria.</p>
+        <p>Base preparada para futuros procedimientos.</p>
       </div>
-      <EmptyClinicalState
-        title="Sin procedimientos pediátricos publicados"
-        text="Los procedimientos se añadirán solo con fuente validada y utilidad clínica real."
-      />
+      <EmptyClinicalState text="No hay procedimientos cargados." />
     </div>
   );
 }

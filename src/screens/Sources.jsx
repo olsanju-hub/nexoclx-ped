@@ -1,14 +1,13 @@
-import { SourceList } from '../components/detail/SourceList.jsx';
-import { clinicalSources } from '../data/clinicalContent.js';
+import { EmptyClinicalState } from '../components/feedback/EmptyClinicalState.jsx';
 
 export function Sources() {
   return (
     <div className="screen">
       <div className="section-heading">
         <h1>Fuentes</h1>
-        <p>Verificación bibliográfica.</p>
+        <p>Base preparada para futuras fuentes.</p>
       </div>
-      <SourceList sources={clinicalSources} />
+      <EmptyClinicalState text="No hay fuentes cargadas." />
     </div>
   );
 }

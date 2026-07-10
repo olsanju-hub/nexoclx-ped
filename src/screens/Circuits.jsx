@@ -5,12 +5,9 @@ export function Circuits() {
     <div className="screen">
       <div className="section-heading">
         <h1>Circuitos</h1>
-        <p>Sección secundaria.</p>
+        <p>Base preparada para futuros circuitos.</p>
       </div>
-      <EmptyClinicalState
-        title="Sin circuitos pediátricos publicados"
-        text="Los circuitos se crearán solo cuando orienten derivación, ingreso o activación."
-      />
+      <EmptyClinicalState text="No hay circuitos cargados." />
     </div>
   );
 }
