@@ -22,6 +22,7 @@ const calciumGluconateDose = (values) => {
 
 const insulinDose = (values) => {
   const weight = toNumber(values.weight);
+  if (!values.glucoseAvailable) return '';
   if (weight === null) return '';
   const dose = Math.min(weight * 0.1, 10);
   return `${round(dose, 2)} UI de insulina regular IV; confirmar glucosa y protocolo local`;
@@ -43,6 +44,8 @@ const hyperkalemiaProtocol = {
     title: 'Asistente pediatrico de hiperpotasemia',
     intro: 'Usa edad, peso, potasio, ECG, estabilidad, muestra y funcion renal para llegar a una conducta segura.',
     copyPrefix: 'Valoracion pediatrica hiperpotasemia',
+    contextLabel: 'NexoClx Ped',
+    operationalTrace: true,
     fields: [
       { id: 'age', label: 'Edad', type: 'pediatricAge', required: true },
       { id: 'weight', label: 'Peso confirmado', type: 'number', unit: 'kg', min: 0.5, max: 120, required: true },
@@ -95,6 +98,45 @@ const hyperkalemiaProtocol = {
       {
         status: 'Critico',
         tone: 'alert',
+        title: 'Estabilizacion pediatrica con glucemia pendiente',
+        body: 'Hay criterio critico, pero falta glucemia basal para recomendar insulina-glucosa.',
+        all: [
+          { source: 'computed', id: 'Regla de riesgo', equals: 'HK-PED-RSK-003: hiperpotasemia pediatrica critica' },
+          { id: 'glucoseAvailable', equals: false },
+        ],
+        actions: [
+          'ABCDE, monitor ECG continuo, via IV/IO y aviso a equipo senior/UCIP.',
+          'Confirmar profesionalmente calcio IV/IO si ECG de riesgo o inestabilidad: usar dosis calculada y no mezclar con bicarbonato.',
+          'Obtener glucemia basal antes de insulina-glucosa; no mostrar pauta completa hasta disponer del dato.',
+          'Repetir ECG y potasio tras intervencion; si persiste ECG de riesgo, reabrir rama critica y escalar.',
+        ],
+        recommendations: [
+          {
+            id: 'ped-calcium',
+            rule: 'HK-PED-TX-001',
+            label: 'Administrar calcio IV/IO',
+            detail: 'Actuacion farmacologica pediatrica critica con dosis por peso y monitorizacion ECG.',
+            critical: true,
+          },
+          {
+            id: 'ped-get-glucose',
+            rule: 'HK-PED-SAFE-001',
+            label: 'Obtener glucemia basal',
+            detail: 'Bloqueo de seguridad antes de insulina-glucosa pediatrica.',
+            critical: true,
+          },
+          {
+            id: 'ped-ucip',
+            rule: 'HK-PED-ESC-001',
+            label: 'Escalar a UCIP/traslado',
+            detail: 'Escalada si ECG persiste, hay refractariedad, riesgo renal o capacidad local insuficiente.',
+            critical: true,
+          },
+        ],
+      },
+      {
+        status: 'Critico',
+        tone: 'alert',
         title: 'Estabilizacion pediatrica y escalada inmediata',
         body: 'Hay criterio de hiperpotasemia pediatrica critica o ECG/inestabilidad.',
         when: { source: 'computed', id: 'Regla de riesgo', equals: 'HK-PED-RSK-003: hiperpotasemia pediatrica critica' },
@@ -103,6 +145,29 @@ const hyperkalemiaProtocol = {
           'Confirmar profesionalmente calcio IV/IO si ECG de riesgo o inestabilidad: usar dosis calculada y no mezclar con bicarbonato.',
           'Si se indica desplazamiento intracelular, confirmar glucemia y usar insulina-glucosa con monitorizacion de hipoglucemia.',
           'Repetir ECG y potasio tras intervencion; si persiste ECG de riesgo, reabrir rama critica y escalar.',
+        ],
+        recommendations: [
+          {
+            id: 'ped-calcium',
+            rule: 'HK-PED-TX-001',
+            label: 'Administrar calcio IV/IO',
+            detail: 'Actuacion farmacologica pediatrica critica con dosis por peso y monitorizacion ECG.',
+            critical: true,
+          },
+          {
+            id: 'ped-insulin-glucose',
+            rule: 'HK-PED-TX-002',
+            label: 'Administrar insulina-glucosa',
+            detail: 'Desplazamiento intracelular con peso confirmado, glucemia basal y vigilancia de hipoglucemia.',
+            critical: true,
+          },
+          {
+            id: 'ped-ucip',
+            rule: 'HK-PED-ESC-001',
+            label: 'Escalar a UCIP/traslado',
+            detail: 'Escalada si ECG persiste, hay refractariedad, riesgo renal o capacidad local insuficiente.',
+            critical: true,
+          },
         ],
       },
       {
@@ -113,6 +178,14 @@ const hyperkalemiaProtocol = {
         actions: [
           'Repetir potasio con extraccion no hemolizada y ECG si valor alto, sintomas o riesgo renal.',
           'Reabrir el asistente con potasio actualizado; no cerrar como leve si falta dato vigente.',
+        ],
+        recommendations: [
+          {
+            id: 'ped-repeat-sample',
+            rule: 'HK-PED-DX-002',
+            label: 'Repetir potasio pediatrico',
+            detail: 'Confirmar muestra no hemolizada antes de cerrar conducta.',
+          },
         ],
       },
       {
@@ -127,6 +200,22 @@ const hyperkalemiaProtocol = {
           'Monitorizar, revisar causas, suspender aportes de potasio y consultar pediatria/nefrologia.',
           'Valorar traslado a centro con UCIP/nefrologia si la capacidad local no permite vigilancia segura.',
         ],
+        recommendations: [
+          {
+            id: 'ped-admit-monitor',
+            rule: 'HK-PED-DST-001',
+            label: 'Observacion/ingreso pediatrico',
+            detail: 'Mantener monitorizacion y reevaluacion por riesgo de progresion o causa renal.',
+            critical: true,
+          },
+          {
+            id: 'ped-nephrology',
+            rule: 'HK-PED-ESC-002',
+            label: 'Interconsulta urgente',
+            detail: 'Consultar pediatria/nefrologia si hay ERC, FRA, dialisis, oligoanuria o refractariedad.',
+            critical: true,
+          },
+        ],
       },
       {
         status: 'Reevaluar',
@@ -139,6 +228,14 @@ const hyperkalemiaProtocol = {
         actions: [
           'Revisar farmacos, aportes, funcion renal y causa; repetir potasio segun riesgo.',
           'Entregar instrucciones de alarma a la familia y reabrir asistente si cambia ECG, sintomas o potasio.',
+        ],
+        recommendations: [
+          {
+            id: 'ped-follow-up',
+            rule: 'HK-PED-RV-001',
+            label: 'Seguimiento pediatrico estrecho',
+            detail: 'Planificar reevaluacion de potasio, funcion renal y signos de alarma familiares.',
+          },
         ],
       },
     ],
