@@ -75,6 +75,33 @@ const hyperkalemiaProtocol = {
       { id: 'Calcio calculado', type: 'custom', fn: calciumGluconateDose },
       { id: 'Insulina calculada', type: 'custom', fn: insulinDose },
     ],
+    incompleteOutcome: {
+      status: 'Datos',
+      title: 'Confirmar datos pediátricos antes de dosificar',
+      body: 'No se muestran dosis si falta peso u otro dato obligatorio, pero el caso no queda cerrado.',
+      actions: [
+        'Confirmar peso; si es una emergencia y el contexto lo permite, estimar peso con método validado local.',
+        'Continuar estabilización no dependiente de dosis y activar pediatra senior/UCIP o traslado si hay inestabilidad o ECG de riesgo.',
+      ],
+      recommendations: [
+        {
+          id: 'ped-confirm-weight',
+          rule: 'HK-PED-SAFE-000',
+          label: 'Confirmar o estimar peso',
+          detail: 'Bloqueo de seguridad: no registrar dosis pediátrica hasta disponer de peso confirmado o estimado por método validado local.',
+          critical: true,
+          reevaluationKind: 'observation',
+        },
+        {
+          id: 'ped-escalate-missing-data',
+          rule: 'HK-PED-ESC-000',
+          label: 'Activar pediatra/UCIP o traslado',
+          detail: 'Si el paciente está crítico y falta peso, priorizar ayuda senior, estabilización no dosificada y traslado seguro.',
+          critical: true,
+          reevaluationKind: 'transfer',
+        },
+      ],
+    },
     interpretations: [
       {
         id: 'ped-glucose-needed',
@@ -117,6 +144,8 @@ const hyperkalemiaProtocol = {
             label: 'Administrar calcio IV/IO',
             detail: 'Actuacion farmacologica pediatrica critica con dosis por peso y monitorizacion ECG.',
             critical: true,
+            computedDetails: ['Calcio calculado'],
+            reevaluationKind: 'calcium',
           },
           {
             id: 'ped-get-glucose',
@@ -124,6 +153,7 @@ const hyperkalemiaProtocol = {
             label: 'Obtener glucemia basal',
             detail: 'Bloqueo de seguridad antes de insulina-glucosa pediatrica.',
             critical: true,
+            reevaluationKind: 'observation',
           },
           {
             id: 'ped-ucip',
@@ -131,6 +161,7 @@ const hyperkalemiaProtocol = {
             label: 'Escalar a UCIP/traslado',
             detail: 'Escalada si ECG persiste, hay refractariedad, riesgo renal o capacidad local insuficiente.',
             critical: true,
+            reevaluationKind: 'transfer',
           },
         ],
       },
@@ -153,6 +184,8 @@ const hyperkalemiaProtocol = {
             label: 'Administrar calcio IV/IO',
             detail: 'Actuacion farmacologica pediatrica critica con dosis por peso y monitorizacion ECG.',
             critical: true,
+            computedDetails: ['Calcio calculado'],
+            reevaluationKind: 'calcium',
           },
           {
             id: 'ped-insulin-glucose',
@@ -160,6 +193,8 @@ const hyperkalemiaProtocol = {
             label: 'Administrar insulina-glucosa',
             detail: 'Desplazamiento intracelular con peso confirmado, glucemia basal y vigilancia de hipoglucemia.',
             critical: true,
+            computedDetails: ['Insulina calculada'],
+            reevaluationKind: 'insulin',
           },
           {
             id: 'ped-ucip',
@@ -167,6 +202,7 @@ const hyperkalemiaProtocol = {
             label: 'Escalar a UCIP/traslado',
             detail: 'Escalada si ECG persiste, hay refractariedad, riesgo renal o capacidad local insuficiente.',
             critical: true,
+            reevaluationKind: 'transfer',
           },
         ],
       },
@@ -185,6 +221,7 @@ const hyperkalemiaProtocol = {
             rule: 'HK-PED-DX-002',
             label: 'Repetir potasio pediatrico',
             detail: 'Confirmar muestra no hemolizada antes de cerrar conducta.',
+            reevaluationKind: 'observation',
           },
         ],
       },
@@ -207,6 +244,7 @@ const hyperkalemiaProtocol = {
             label: 'Observacion/ingreso pediatrico',
             detail: 'Mantener monitorizacion y reevaluacion por riesgo de progresion o causa renal.',
             critical: true,
+            reevaluationKind: 'observation',
           },
           {
             id: 'ped-nephrology',
@@ -214,6 +252,7 @@ const hyperkalemiaProtocol = {
             label: 'Interconsulta urgente',
             detail: 'Consultar pediatria/nefrologia si hay ERC, FRA, dialisis, oligoanuria o refractariedad.',
             critical: true,
+            reevaluationKind: 'transfer',
           },
         ],
       },
@@ -235,6 +274,7 @@ const hyperkalemiaProtocol = {
             rule: 'HK-PED-RV-001',
             label: 'Seguimiento pediatrico estrecho',
             detail: 'Planificar reevaluacion de potasio, funcion renal y signos de alarma familiares.',
+            reevaluationKind: 'observation',
           },
         ],
       },
