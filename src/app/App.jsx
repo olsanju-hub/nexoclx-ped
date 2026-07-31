@@ -64,7 +64,7 @@ export default function App() {
       {route === routes.home && <Home app={appConfig} sections={primarySections} onNavigate={navigate} />}
       {route === routes.protocols && <Protocols protocols={clinicalProtocols} onOpen={openProtocol} />}
       {route === routes.protocolDetail && <ProtocolDetail protocol={currentProtocol} onBack={() => navigate(routes.protocols)} />}
-      {route === routes.tools && <Tools app={appConfig} />}
+      {route === routes.tools && <Tools app={appConfig} onOpen={openProtocol} />}
       {route === routes.procedures && <Procedures />}
       {route === routes.circuits && <Circuits onOpen={() => navigate(routes.circuitDetail)} />}
       {route === routes.circuitDetail && <CircuitDetail onBack={() => navigate(routes.circuits)} />}

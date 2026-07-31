@@ -1,13 +1,25 @@
-import { EmptyClinicalState } from '../components/feedback/EmptyClinicalState.jsx';
+import { CompactList } from '../components/lists/CompactList.jsx';
+import { ListRow } from '../components/lists/ListRow.jsx';
+import { decisionProtocols } from '../data/decisionProtocols.js';
 
-export function Tools() {
+export function Tools({ onOpen }) {
   return (
     <div className="screen">
       <div className="section-heading">
         <h1>Herramientas</h1>
-        <p>Base preparada para futuras herramientas clínicas.</p>
+        <p>Asistentes pediátricos orientados a conducta.</p>
       </div>
-      <EmptyClinicalState text="No hay herramientas cargadas." />
+      <CompactList label="Herramientas pediátricas">
+        {decisionProtocols.map((tool) => (
+          <ListRow
+            key={tool.id}
+            title={tool.title}
+            description={tool.description}
+            meta={tool.status}
+            onClick={() => onOpen(tool.id)}
+          />
+        ))}
+      </CompactList>
     </div>
   );
 }

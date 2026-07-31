@@ -1,1 +1,3 @@
-export const clinicalProtocols = [];
+import { decisionProtocols } from './decisionProtocols.js';
+
+export const clinicalProtocols = decisionProtocols;
